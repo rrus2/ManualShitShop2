@@ -13,6 +13,9 @@ namespace ManualShitShop2.Models
         public string Name { get; set; }
         [Required]
         public decimal Price { get; set; }
+        [Required]
+        public int Stock { get; set; }
+        public int Amount { get; set; }
         public ICollection<Product> Products { get; set; }
     }
 }

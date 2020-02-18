@@ -12,5 +12,6 @@ namespace ManualShitShop2.Models
         public ApplicationUser ApplicationUser { get; set; }
         public int? ProductID { get; set; }
         public Product Product { get; set; }
+        public int Amount { get; set; }
     }
 }

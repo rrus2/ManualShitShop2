@@ -29,6 +29,12 @@
         <dd class = "col-sm-10">
             @Html.DisplayFor(model => model.Price)
         </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => Model.Amount)
+        </dt>
+        <dd class="col-sm-10">
+            <select asp-for="Amount" asp-items="ViewBag.Stock"></select>
+        </dd>
     </dl>
 </div>
 <div class="container text-center">

@@ -6,6 +6,7 @@ using ManualShitShop2.Models;
 using ManualShitShop2.Services;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.Rendering;
 
 namespace ManualShitShop2.Controllers
 {
@@ -29,6 +30,13 @@ namespace ManualShitShop2.Controllers
         public ActionResult Details(int id)
         {
             var product = ProductService.GetProduct(id);
+            var listofstock = new List<int>();
+            for (int i = 1; i < product.Stock; i++)
+            {
+                listofstock.Add(i);
+            }
+            var list = new SelectList(listofstock);
+            ViewBag.Stock = list;
             return View(product);
         }
 
