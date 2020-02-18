@@ -103,9 +103,10 @@ namespace ManualShitShop2.Controllers
         }
         public ActionResult Buy(int id)
         {
+            var product = ProductService.GetProduct(id);
             var claim = HttpContext.User;
             OrderService.Buy(id, claim);
-            return View();
+            return View("Details", product);
         }
     }
 }

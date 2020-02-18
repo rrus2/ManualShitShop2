@@ -17,6 +17,7 @@ namespace ManualShitShop2.Models
         }
         public DbSet<Product> Products { get; set; }
         public DbSet<Order> Orders { get; set; }
+        public DbSet<ShoppingCart> ShoppingCart { get; set; }
         protected override void OnModelCreating(ModelBuilder builder)
         {
             base.OnModelCreating(builder);
