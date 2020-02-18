@@ -32,7 +32,10 @@
     </dl>
 </div>
 <div class="container text-center">
-    <a asp-controller="Product" asp-action="Buy" asp-route-id="@Model.ProductID" class="btn btn-primary">Buy</a> <br />
-    <a asp-controller="ShoppingCart" asp-action="AddToCart" asp-route-id="@Model.ProductID" class="btn btn-secondary">Add to cart</a><br />
+    @if (User.Identity.IsAuthenticated)
+    {
+        <a asp-controller="Product" asp-action="Buy" asp-route-id="@Model.ProductID" class="btn btn-primary">Buy</a> <br />
+        <a asp-controller="ShoppingCart" asp-action="AddToCart" asp-route-id="@Model.ProductID" class="btn btn-secondary">Add to cart</a><br />
+    }
     <a asp-action="Index">Back to List</a> <br />
 </div>

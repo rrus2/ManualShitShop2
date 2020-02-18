@@ -12,9 +12,11 @@ namespace ManualShitShop2.Controllers
     public class ProductController : Controller
     {
         private readonly IProductService ProductService;
-        public ProductController(IProductService productService)
+        private readonly IOrderService OrderService;
+        public ProductController(IProductService productService, IOrderService orderService)
         {
             this.ProductService = productService;
+            this.OrderService = orderService;
         }
         // GET: Product
         public ActionResult Index()
@@ -98,6 +100,12 @@ namespace ManualShitShop2.Controllers
             {
                 return View();
             }
+        }
+        public ActionResult Buy(int id)
+        {
+            var claim = HttpContext.User;
+            OrderService.Buy(id, claim);
+            return View();
         }
     }
 }
