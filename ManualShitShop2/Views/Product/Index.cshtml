@@ -12,7 +12,7 @@
         <a asp-action="Create">Create New</a>
     </p>
 }
-<table class="table">
+@*<table class="table">
     <thead class="thead-dark">
         <tr>
             <th>
@@ -36,8 +36,18 @@
                 </td>
                 <td>
                     @Html.ActionLink("Details", "Details", new { Id = Model.FirstOrDefault().ProductID }) |
+                    @Html.ActionLink("Add to cart", "AddToCart", "ShoppingCart", new { Id = Model.FirstOrDefault().ProductID})
                 </td>
             </tr>
         }
     </tbody>
-</table>
+</table>*@
+@foreach (var item in Model)
+{
+    <div class="jumbotron text-center border-dark">
+        @Html.DisplayFor(x => item.Name)<br />
+        @Html.DisplayFor(x => item.Price)<br />
+        <a asp-controller="Product" asp-action="Details" asp-route-id="@Model.FirstOrDefault().ProductID" class="btn btn-primary">Details</a><br />
+        <a asp-controller="ShoppingCart" asp-action="AddToCart" asp-route-id="@Model.FirstOrDefault().ProductID" class="btn btn-secondary">Add to cart</a>
+    </div>
+}

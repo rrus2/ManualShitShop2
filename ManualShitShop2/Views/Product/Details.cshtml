@@ -7,7 +7,7 @@
 
 <h1>Details</h1>
 
-<div>
+<div class="container">
     <h4>Product</h4>
     <hr />
     <dl class="row">
@@ -31,7 +31,8 @@
         </dd>
     </dl>
 </div>
-<div>
-    @Html.ActionLink("Edit", "Edit", new { /* id = Model.PrimaryKey */ }) |
-    <a asp-action="Index">Back to List</a>
+<div class="container text-center">
+    <a asp-controller="Product" asp-action="Buy" asp-route-id="@Model.ProductID" class="btn btn-primary">Buy</a> <br />
+    <a asp-controller="ShoppingCart" asp-action="AddToCart" asp-route-id="@Model.ProductID" class="btn btn-secondary">Add to cart</a><br />
+    <a asp-action="Index">Back to List</a> <br />
 </div>
