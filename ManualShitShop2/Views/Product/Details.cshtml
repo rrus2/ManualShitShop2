@@ -6,42 +6,47 @@
 }
 
 <h1>Details</h1>
-
-<div class="container">
-    <h4>Product</h4>
-    <hr />
-    <dl class="row">
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.ProductID)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.ProductID)
-        </dd>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.Name)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.Name)
-        </dd>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.Price)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.Price)
-        </dd>
-        <dt class="col-sm-2">
-            @Html.DisplayNameFor(model => Model.Amount)
-        </dt>
-        <dd class="col-sm-10">
-            <select asp-for="Amount" asp-items="ViewBag.Stock"></select>
-        </dd>
-    </dl>
-</div>
-<div class="container text-center">
-    @if (User.Identity.IsAuthenticated)
-    {
-        <a asp-controller="Product" asp-action="Buy" asp-route-id="@Model.ProductID" class="btn btn-primary">Buy</a> <br />
-        <a asp-controller="ShoppingCart" asp-action="AddToCart" asp-route-id="@Model.ProductID" class="btn btn-secondary">Add to cart</a><br />
-    }
-    <a asp-action="Index">Back to List</a> <br />
-</div>
+<form asp-controller="Product" asp-action="Buy" method="post" asp-route-id="@Model.ProductID">
+    <div class="container">
+        <h4>Product</h4>
+        <hr />
+        <dl class="row">
+            <dt class="col-sm-2">
+                @Html.DisplayNameFor(model => model.ProductID)
+            </dt>
+            <dd class="col-sm-10">
+                @Html.DisplayFor(model => model.ProductID)
+            </dd>
+            <dt class="col-sm-2">
+                @Html.DisplayNameFor(model => model.Name)
+            </dt>
+            <dd class="col-sm-10">
+                @Html.DisplayFor(model => model.Name)
+            </dd>
+            <dt class="col-sm-2">
+                @Html.DisplayNameFor(model => model.Price)
+            </dt>
+            <dd class="col-sm-10">
+                @Html.DisplayFor(model => model.Price)
+            </dd>
+            <dt class="col-sm-2">
+                @Html.DisplayNameFor(model => Model.Amount)
+            </dt>
+            <dd class="col-sm-10">
+                <select asp-for="Amount" asp-items="ViewBag.Stock"></select>
+            </dd>
+        </dl>
+    </div>
+    <div class="container text-center">
+        @if (User.Identity.IsAuthenticated && Model.Stock > 1)
+        {
+            <input type="submit" class="btn btn-primary" value="Buy" /> <br />
+            <a asp-controller="ShoppingCart" asp-action="AddToCart" asp-route-id="@Model.ProductID" class="btn btn-secondary">Add to cart</a><br />
+        }
+        else
+        {
+            <p>Product sold out or user not logged in</p>
+        }
+        <a asp-action="Index">Back to List</a> <br />
+    </div>
+</form>

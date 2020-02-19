@@ -20,10 +20,12 @@ namespace ManualShitShop2.Services
             _userManager = userManager;
         }
 
-        public async Task Buy(int id, ClaimsPrincipal claim)
+        public async Task Buy(int id, ClaimsPrincipal claim, int amount)
         {
             var user = await _userManager.GetUserAsync(claim);
-            _db.Orders.Add(new Order { ApplicationUserID = user.Id, ProductID = id });
+            var product = _db.Products.Find(id);
+            product.Stock -= amount;
+            _db.Orders.Add(new Order { ApplicationUserID = user.Id, ProductID = id, Amount = amount, ApplicationUser = user, Product = product });
             _db.SaveChanges();
         }
     }

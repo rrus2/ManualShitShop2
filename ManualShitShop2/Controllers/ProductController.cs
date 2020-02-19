@@ -54,7 +54,7 @@ namespace ManualShitShop2.Controllers
             try
             {
                 // TODO: Add insert logic here
-                var product = new Product { Name = collection["Name"], Price = Convert.ToDecimal(collection["Price"]) };
+                var product = new Product { Name = collection["Name"], Price = Convert.ToDecimal(collection["Price"]), Stock = Convert.ToInt32(collection["Stock"]) };
                 ProductService.CreateProduct(product);
                 return RedirectToAction(nameof(Index));
             }
@@ -109,12 +109,17 @@ namespace ManualShitShop2.Controllers
                 return View();
             }
         }
-        public ActionResult Buy(int id)
+        public ActionResult Buy(int id, IFormCollection collection)
         {
             var product = ProductService.GetProduct(id);
             var claim = HttpContext.User;
-            OrderService.Buy(id, claim);
-            return View("Details", product);
+            int amount = Convert.ToInt32(collection["Amount"]);
+            OrderService.Buy(id, claim, amount);
+            return View("ThankYou");
+        }
+        public ActionResult ThankYou()
+        {
+            return View();
         }
     }
 }

@@ -8,6 +8,7 @@ namespace ManualShitShop2.Models
 {
     public class Order
     {
+        public int OrderID { get; set; }
         public string ApplicationUserID { get; set; }
         public ApplicationUser ApplicationUser { get; set; }
         public int? ProductID { get; set; }
