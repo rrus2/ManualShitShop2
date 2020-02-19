@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using ManualShitShop2.Models;
+using ReflectionIT.Mvc.Paging;
 
 namespace ManualShitShop2.Services
 {
@@ -59,10 +60,11 @@ namespace ManualShitShop2.Services
 
         }
 
-        public List<Product> GetProducts()
+        public async Task<PagingList<Product>> GetProductsAsync()
         {
-            var products = _db.Products.ToList();
-            return products;
+            var products = _db.Products.OrderBy(x => x.Name);
+            var model = await PagingList.CreateAsync(products, 5, 1);
+            return model;
 
         }
 

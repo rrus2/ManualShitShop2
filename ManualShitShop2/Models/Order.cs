@@ -1,6 +1,7 @@
 ﻿using ManualShitShop2.Areas.Identity.Data;
 using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Threading.Tasks;
 
@@ -8,6 +9,7 @@ namespace ManualShitShop2.Models
 {
     public class Order
     {
+        [Key]
         public int OrderID { get; set; }
         public string ApplicationUserID { get; set; }
         public ApplicationUser ApplicationUser { get; set; }

@@ -22,8 +22,8 @@ namespace ManualShitShop2.Controllers
         // GET: Product
         public ActionResult Index()
         {
-            var products = ProductService.GetProducts();
-            return View(products);
+            var products = ProductService.GetProductsAsync();
+            return View(products.GetAwaiter().GetResult());
         }
 
         // GET: Product/Details/5
@@ -109,15 +109,15 @@ namespace ManualShitShop2.Controllers
                 return View();
             }
         }
-        public ActionResult Buy(int id, IFormCollection collection)
+        public async Task<ActionResult> Buy(int id, IFormCollection collection)
         {
             var product = ProductService.GetProduct(id);
             var claim = HttpContext.User;
             int amount = Convert.ToInt32(collection["Amount"]);
-            OrderService.Buy(id, claim, amount);
+            await OrderService.Buy(id, claim, amount);
             return View("ThankYou");
         }
-        public ActionResult ThankYou()
+        public async Task<ActionResult> ThankYou()
         {
             return View();
         }

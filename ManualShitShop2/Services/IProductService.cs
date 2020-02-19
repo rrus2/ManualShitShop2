@@ -1,4 +1,5 @@
 ﻿using ManualShitShop2.Models;
+using ReflectionIT.Mvc.Paging;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -8,7 +9,7 @@ namespace ManualShitShop2.Services
 {
     public interface IProductService
     {
-        List<Product> GetProducts();
+        Task<PagingList<Product>> GetProductsAsync();
         Product GetProduct(int id);
         void CreateProduct(Product product);
         void UpdateProduct(int id, Product product);

@@ -22,11 +22,22 @@ namespace ManualShitShop2.Services
 
         public async Task Buy(int id, ClaimsPrincipal claim, int amount)
         {
+            // find user
             var user = await _userManager.GetUserAsync(claim);
+            //find product
             var product = _db.Products.Find(id);
+            // find order
+            var order = _db.Orders.Where(x => x.ProductID == product.ProductID && x.ApplicationUserID == user.Id);
+            if (order != null)
+            {
+                order.FirstOrDefault().Amount += amount;
+            }
+            else
+            {
+                _db.Orders.Add(new Order { ApplicationUserID = user.Id, ProductID = id, Amount = amount });
+            }
             product.Stock -= amount;
-            _db.Orders.Add(new Order { ApplicationUserID = user.Id, ProductID = id, Amount = amount, ApplicationUser = user, Product = product });
-            _db.SaveChanges();
+            await _db.SaveChangesAsync();
         }
     }
 }

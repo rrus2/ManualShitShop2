@@ -14,6 +14,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using ReflectionIT.Mvc.Paging;
 
 namespace ManualShitShop2
 {
@@ -43,6 +44,7 @@ namespace ManualShitShop2
             services.AddScoped<IShoppingCartService, ShoppingCartService>();
             services.AddIdentity<ApplicationUser, IdentityRole>()
             .AddEntityFrameworkStores<ApplicationDbContext>().AddDefaultTokenProviders().AddDefaultUI();
+            services.AddPaging();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
