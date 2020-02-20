@@ -21,10 +21,10 @@ namespace ManualShitShop2.Controllers
             this.OrderService = orderService;
         }
         // GET: Product
-        public ActionResult Index(int page = 1, int size = 5)
+        public ActionResult Index(int? pageNumber = 1, int size = 5)
         {
-            var products = ProductService.GetProductsAsync(page, size);
-            var model = new ProductPagingViewModel { Products = products.GetAwaiter().GetResult(), CurrentPage = page, PageSize = size };
+            var products = ProductService.GetProductsAsync((int)pageNumber, size);
+            var model = new ProductPagingViewModel { Products = products.GetAwaiter().GetResult(), CurrentPage = (int)pageNumber, PageSize = size };
             return View(model);
         }
 

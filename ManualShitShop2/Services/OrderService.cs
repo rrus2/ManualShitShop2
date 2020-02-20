@@ -27,10 +27,10 @@ namespace ManualShitShop2.Services
             //find product
             var product = _db.Products.Find(id);
             // find order
-            var order = _db.Orders.Where(x => x.ProductID == product.ProductID && x.ApplicationUserID == user.Id);
+            var order = _db.Orders.FirstOrDefault(x => x.ProductID == product.ProductID && x.ApplicationUserID == user.Id);
             if (order != null)
             {
-                order.FirstOrDefault().Amount += amount;
+                order.Amount += amount;
             }
             else
             {
