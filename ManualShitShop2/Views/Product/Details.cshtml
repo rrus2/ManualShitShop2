@@ -6,7 +6,7 @@
 }
 
 <h1>Details</h1>
-<form asp-controller="Product" asp-action="Buy" method="post" asp-route-id="@Model.ProductID">
+<form method="post" >
     <div class="container">
         <h4>Product</h4>
         <hr />
@@ -40,8 +40,8 @@
     <div class="container text-center">
         @if (User.Identity.IsAuthenticated && Model.Stock > 1)
         {
-            <input type="submit" class="btn btn-primary" value="Buy" /> <br />
-            <a asp-controller="ShoppingCart" asp-action="AddToCart" asp-route-id="@Model.ProductID" class="btn btn-secondary">Add to cart</a><br />
+            <input type="submit" class="btn btn-primary" value="Buy" asp-route-id="@Model.ProductID" asp-controller="Product" asp-action="BuyAsync" /> <br />
+            <input type="submit" class="btn btn-secondary" asp-controller="ShoppingCart" asp-action="AddToCartAsync" asp-route-id="@Model.ProductID"/><br />
         }
         else
         {

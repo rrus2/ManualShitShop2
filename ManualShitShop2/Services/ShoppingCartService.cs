@@ -1,6 +1,7 @@
 ﻿using ManualShitShop2.Areas.Identity.Data;
 using ManualShitShop2.Models;
 using Microsoft.AspNetCore.Identity;
+using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -18,22 +19,34 @@ namespace ManualShitShop2.Services
             _db = db;
             _userManager = userManager;
         }
-        public async Task AddToCart(int id, ClaimsPrincipal claim)
+        public async Task AddToCart(int id, ClaimsPrincipal claim, int amount)
         {
             var user = await _userManager.GetUserAsync(claim);
-            var cart = new ShoppingCart { ProductID = id, UserID = user.Id };
-            
+            var product = _db.Products.FirstOrDefault(x => x.ProductID == id);
+            if (product == null)
+            {
+                throw new Exception("Fail finding product");
+            }
+            var cart = new ShoppingCart { ApplicationUser = user, Product = product, TotalPrice = product.Price * amount, Amount = amount };
+            _db.ShoppingCart.Add(cart);
+            await _db.SaveChangesAsync();
         }
 
         public async Task<List<ShoppingCart>> GetItems()
         {
-            var cart = _db.ShoppingCart.ToList();
+            var cart = _db.ShoppingCart.Include(x => x.Product).Include(x => x.ApplicationUser).ToList();
             return cart;
         }
 
         public async Task RemoveFromCart(int id, ClaimsPrincipal claim)
         {
-            throw new NotImplementedException();
+            var cart = _db.ShoppingCart.FirstOrDefault(x => x.Product.ProductID == id);
+            if (cart == null)
+            {
+                throw new Exception("Fail finding product");
+            }
+            _db.ShoppingCart.Remove(cart);
+            await _db.SaveChangesAsync();
         }
     }
 }
