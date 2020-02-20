@@ -46,7 +46,8 @@ namespace ManualShitShop2.Controllers
         public async Task<IActionResult> DeleteAsync(int id)
         {
             await _shoppingCartService.RemoveFromCart(id);
-            return View("IndexAsync");
+            var items = await _shoppingCartService.GetItems();
+            return View("IndexAsync", items);
         }
     }
 }
