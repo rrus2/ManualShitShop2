@@ -54,6 +54,12 @@ namespace ManualShitShop2.Services
 
         }
 
+        public async Task<int> GetCount()
+        {
+            var productCount = _db.Products.Count();
+            return productCount;
+        }
+
         public Product GetProduct(int id)
         {
             var product = _db.Products.FirstOrDefault(x => x.ProductID == id);

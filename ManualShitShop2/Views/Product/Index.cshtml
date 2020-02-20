@@ -35,6 +35,12 @@
    class="btn btn-default @prevDisabled">
     Previous
 </a>
+
+@for (int i = 1; i < Model.TotalPages + 1; i++)
+{
+    <a asp-action="Index" asp-route-pageNumber="@(Model.CurrentPage)">@i</a>
+}
+
 <a asp-action="Index"
    asp-route-pageNumber="@(Model.CurrentPage + 1)"
    class="btn btn-default @nextDisabled">

@@ -10,7 +10,7 @@ namespace ManualShitShop2.ViewModels
     public class ProductPagingViewModel : PageModel
     {
         public int CurrentPage { get; set; } = 1;
-        public int Count => Products.Count;
+        public int Count { get; set; }
         public int PageSize { get; set; } = 5;
         public bool HasPreviousPage
         {

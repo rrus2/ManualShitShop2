@@ -24,7 +24,7 @@ namespace ManualShitShop2.Controllers
         public ActionResult Index(int? pageNumber = 1, int size = 5)
         {
             var products = ProductService.GetProductsAsync((int)pageNumber, size);
-            var model = new ProductPagingViewModel { Products = products.GetAwaiter().GetResult(), CurrentPage = (int)pageNumber, PageSize = size };
+            var model = new ProductPagingViewModel { Products = products.GetAwaiter().GetResult(), CurrentPage = (int)pageNumber, PageSize = size, Count = ProductService.GetCount().GetAwaiter().GetResult() };
             return View(model);
         }
 
