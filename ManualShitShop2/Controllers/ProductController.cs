@@ -4,6 +4,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using ManualShitShop2.Models;
 using ManualShitShop2.Services;
+using ManualShitShop2.ViewModels;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
@@ -20,10 +21,11 @@ namespace ManualShitShop2.Controllers
             this.OrderService = orderService;
         }
         // GET: Product
-        public ActionResult Index()
+        public ActionResult Index(int page = 1, int size = 5)
         {
-            var products = ProductService.GetProductsAsync();
-            return View(products.GetAwaiter().GetResult());
+            var products = ProductService.GetProductsAsync(page, size);
+            var model = new ProductPagingViewModel { Products = products.GetAwaiter().GetResult(), CurrentPage = page, PageSize = size };
+            return View(model);
         }
 
         // GET: Product/Details/5

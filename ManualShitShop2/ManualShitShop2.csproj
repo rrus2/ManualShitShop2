@@ -21,9 +21,4 @@
     <PackageReference Include="ReflectionIT.Mvc.Paging" Version="2.4.0" />
   </ItemGroup>
 
-
-  <ItemGroup>
-    <Folder Include="ViewModels\" />
-  </ItemGroup>
-
 </Project>
