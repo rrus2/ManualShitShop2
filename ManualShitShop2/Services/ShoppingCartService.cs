@@ -37,12 +37,13 @@ namespace ManualShitShop2.Services
         public async Task BuyAllAsync(ClaimsPrincipal claim, int amount)
         {
             var user = await _userManager.GetUserAsync(claim);
-            var orders = await _orderService.GetAll();
-            var selectedorders = orders.Where(x => x.ApplicationUserID == user.Id);
-            foreach (var item in selectedorders)
+            var cart = _db.ShoppingCart.Include(x => x.Product).ToList();
+            var selectedcart = cart.Where(x => x.ApplicationUser == user);
+            foreach (var item in selectedcart)
             {
-                await _orderService.BuyAsync((int)item.ProductID, claim, amount);
+                await _orderService.BuyAsync((int)item.Product.ProductID, claim, amount);
             }
+
             await _db.SaveChangesAsync();
         }
 
