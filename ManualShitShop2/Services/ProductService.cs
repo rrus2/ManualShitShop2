@@ -54,7 +54,7 @@ namespace ManualShitShop2.Services
 
         }
 
-        public async Task<int> GetCount()
+        public async Task<int> GetCountAsync()
         {
             var productCount = _db.Products.Count();
             return productCount;

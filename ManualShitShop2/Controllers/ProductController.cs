@@ -13,27 +13,27 @@ namespace ManualShitShop2.Controllers
 {
     public class ProductController : Controller
     {
-        private readonly IProductService ProductService;
-        private readonly IOrderService OrderService;
+        private readonly IProductService _productService;
+        private readonly IOrderService _orderService;
         public ProductController(IProductService productService, IOrderService orderService)
         {
-            this.ProductService = productService;
-            this.OrderService = orderService;
+            this._productService = productService;
+            this._orderService = orderService;
         }
         // GET: Product
         public ActionResult Index(int? pageNumber = 1, int size = 5)
         {
-            var products = ProductService.GetProductsAsync((int)pageNumber, size);
-            var model = new ProductPagingViewModel { Products = products.GetAwaiter().GetResult(), CurrentPage = (int)pageNumber, PageSize = size, Count = ProductService.GetCount().GetAwaiter().GetResult() };
+            var products = _productService.GetProductsAsync((int)pageNumber, size);
+            var model = new ProductPagingViewModel { Products = products.GetAwaiter().GetResult(), CurrentPage = (int)pageNumber, PageSize = size, Count = _productService.GetCountAsync().GetAwaiter().GetResult() };
             return View(model);
         }
 
         // GET: Product/Details/5
         public ActionResult Details(int id)
         {
-            var product = ProductService.GetProduct(id);
+            var product = _productService.GetProduct(id);
             var listofstock = new List<int>();
-            for (int i = 1; i < product.Stock; i++)
+            for (int i = 1; i < product.Stock + 1; i++)
             {
                 listofstock.Add(i);
             }
@@ -57,7 +57,7 @@ namespace ManualShitShop2.Controllers
             {
                 // TODO: Add insert logic here
                 var product = new Product { Name = collection["Name"], Price = Convert.ToDecimal(collection["Price"]), Stock = Convert.ToInt32(collection["Stock"]) };
-                ProductService.CreateProduct(product);
+                _productService.CreateProduct(product);
                 return RedirectToAction(nameof(Index));
             }
             catch
@@ -111,15 +111,15 @@ namespace ManualShitShop2.Controllers
                 return View();
             }
         }
-        public async Task<ActionResult> Buy(int id, IFormCollection collection)
+        public async Task<ActionResult> BuyAsync(int id, IFormCollection collection)
         {
-            var product = ProductService.GetProduct(id);
+            var product = _productService.GetProduct(id);
             var claim = HttpContext.User;
             int amount = Convert.ToInt32(collection["Amount"]);
-            await OrderService.Buy(id, claim, amount);
+            await _orderService.BuyAsync(id, claim, amount);
             return View("ThankYou");
         }
-        public async Task<ActionResult> ThankYou()
+        public async Task<ActionResult> ThankYouAsync()
         {
             return View();
         }

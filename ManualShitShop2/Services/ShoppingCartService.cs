@@ -24,6 +24,13 @@ namespace ManualShitShop2.Services
             var cart = new ShoppingCart { ProductID = id, UserID = user.Id };
             
         }
+
+        public async Task<List<ShoppingCart>> GetItems()
+        {
+            var cart = _db.ShoppingCart.ToList();
+            return cart;
+        }
+
         public async Task RemoveFromCart(int id, ClaimsPrincipal claim)
         {
             throw new NotImplementedException();

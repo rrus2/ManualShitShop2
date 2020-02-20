@@ -20,14 +20,14 @@ namespace ManualShitShop2.Services
             _userManager = userManager;
         }
 
-        public async Task Buy(int id, ClaimsPrincipal claim, int amount)
+        public async Task BuyAsync(int id, ClaimsPrincipal claim, int amount)
         {
             // find user
             var user = await _userManager.GetUserAsync(claim);
             //find product
             var product = _db.Products.Find(id);
             // find order
-            var order = _db.Orders.FirstOrDefault(x => x.ProductID == product.ProductID && x.ApplicationUserID == user.Id);
+            var order = _db.Orders.FirstOrDefault(x => x.Product == product && x.ApplicationUser == user);
             if (order != null)
             {
                 order.Amount += amount;

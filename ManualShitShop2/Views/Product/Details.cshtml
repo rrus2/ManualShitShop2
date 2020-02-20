@@ -33,7 +33,7 @@
                 @Html.DisplayNameFor(model => Model.Amount)
             </dt>
             <dd class="col-sm-10">
-                <select asp-for="Amount" asp-items="ViewBag.Stock"></select>
+                <select id="AmountSelect" asp-for="Amount" asp-items="ViewBag.Stock" onchange="CalculateTotal(@Model.Price)"></select>
             </dd>
         </dl>
     </div>
@@ -47,6 +47,16 @@
         {
             <p>Product sold out or user not logged in</p>
         }
+        <p id="TotalPrice">Total: @Model.Price $</p>
         <a asp-action="Index">Back to List</a> <br />
     </div>
 </form>
+
+<script>
+    function CalculateTotal(price) {
+        var select = document.getElementById("AmountSelect");
+        var amount = Number(select.options[select.selectedIndex].text);
+        var total = amount * price;
+        document.getElementById("TotalPrice").innerHTML = "Total: " + total + " $";
+    }
+</script>

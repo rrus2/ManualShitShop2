@@ -8,6 +8,6 @@ namespace ManualShitShop2.Services
 {
     public interface IOrderService
     {
-        Task Buy(int id, ClaimsPrincipal user, int amount);
+        Task BuyAsync(int id, ClaimsPrincipal user, int amount);
     }
 }
