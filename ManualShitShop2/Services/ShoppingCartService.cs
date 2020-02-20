@@ -14,10 +14,12 @@ namespace ManualShitShop2.Services
     {
         private readonly ApplicationDbContext _db;
         private readonly UserManager<ApplicationUser> _userManager;
-        public ShoppingCartService(ApplicationDbContext db, UserManager<ApplicationUser> userManager)
+        private readonly IOrderService _orderService;
+        public ShoppingCartService(ApplicationDbContext db, UserManager<ApplicationUser> userManager, IOrderService orderService)
         {
             _db = db;
             _userManager = userManager;
+            _orderService = orderService;
         }
         public async Task AddToCart(int id, ClaimsPrincipal claim, int amount)
         {
@@ -29,6 +31,27 @@ namespace ManualShitShop2.Services
             }
             var cart = new ShoppingCart { ApplicationUser = user, Product = product, TotalPrice = product.Price * amount, Amount = amount };
             _db.ShoppingCart.Add(cart);
+            await _db.SaveChangesAsync();
+        }
+
+        public async Task BuyAllAsync(ClaimsPrincipal claim, int amount)
+        {
+            var user = await _userManager.GetUserAsync(claim);
+            var orders = await _orderService.GetAll();
+            var selectedorders = orders.Where(x => x.ApplicationUserID == user.Id);
+            foreach (var item in selectedorders)
+            {
+                await _orderService.BuyAsync((int)item.ProductID, claim, amount);
+            }
+            await _db.SaveChangesAsync();
+        }
+
+        public async Task ClearCart(ClaimsPrincipal claim)
+        {
+            var user = await _userManager.GetUserAsync(claim);
+            var orders = await _orderService.GetAll();
+            var shoppingcart = _db.ShoppingCart.Where(x => x.ApplicationUser == user);
+            _db.ShoppingCart.RemoveRange(shoppingcart);
             await _db.SaveChangesAsync();
         }
 

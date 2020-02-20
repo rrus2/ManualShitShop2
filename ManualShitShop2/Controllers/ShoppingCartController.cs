@@ -2,8 +2,10 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using ManualShitShop2.Areas.Identity.Data;
 using ManualShitShop2.Services;
 using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 
 namespace ManualShitShop2.Controllers
@@ -11,9 +13,11 @@ namespace ManualShitShop2.Controllers
     public class ShoppingCartController : Controller
     {
         private readonly IShoppingCartService _shoppingCartService;
-        public ShoppingCartController(IShoppingCartService shoppingCartService)
+        private readonly UserManager<ApplicationUser> _userManager;
+        public ShoppingCartController(IShoppingCartService shoppingCartService, UserManager<ApplicationUser> userManager)
         {
             _shoppingCartService = shoppingCartService;
+            _userManager = userManager;
         }
         public async Task<IActionResult> IndexAsync()
         {
@@ -31,6 +35,13 @@ namespace ManualShitShop2.Controllers
         {
             await _shoppingCartService.RemoveFromCart(id);
             return View("Index");
+        }
+        public async Task<IActionResult> BuyAsync(int amount)
+        {
+            var claim = HttpContext.User;
+            await _shoppingCartService.BuyAllAsync(claim, amount);
+            await _shoppingCartService.ClearCart(claim);
+            return RedirectToAction("Index", "Home");
         }
     }
 }

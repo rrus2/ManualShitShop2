@@ -117,7 +117,7 @@ namespace ManualShitShop2.Controllers
             var claim = HttpContext.User;
             int amount = Convert.ToInt32(collection["Amount"]);
             await _orderService.BuyAsync(id, claim, amount);
-            return View("ThankYou");
+            return View("ThankYouAsync");
         }
         public async Task<IActionResult> ThankYouAsync()
         {

@@ -34,10 +34,16 @@ namespace ManualShitShop2.Services
             }
             else
             {
-                _db.Orders.Add(new Order { ApplicationUserID = user.Id, ProductID = id, Amount = amount });
+                _db.Orders.Add(new Order { ApplicationUser = user, Product = product, Amount = amount });
             }
             product.Stock -= amount;
             await _db.SaveChangesAsync();
+        }
+
+        public async Task<List<Order>> GetAll()
+        {
+            var orders = _db.Orders.ToList();
+            return orders;
         }
     }
 }

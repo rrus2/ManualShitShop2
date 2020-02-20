@@ -40,9 +40,12 @@
                     </ul>
                 </div>
                 <partial name="_LoginPartial" />
-                <div class="cart">
-                    <a asp-controller="ShoppingCart" asp-action="IndexAsync"><img src="~/shoppingcart.jpg" alt="NOPE" width="50" height="50" /></a>
-                </div>
+                @if (User.Identity.IsAuthenticated)
+                {
+                    <div class="cart">
+                        <a asp-controller="ShoppingCart" asp-action="IndexAsync"><img src="~/shoppingcart.jpg" alt="NOPE" width="50" height="50" /></a>
+                    </div>
+                }
             </div>
         </nav>
     </header>

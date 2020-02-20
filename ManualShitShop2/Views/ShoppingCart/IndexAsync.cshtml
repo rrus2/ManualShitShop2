@@ -7,61 +7,71 @@
 
 <h1>Shopping cart of @User.Identity.Name</h1>
 
-<table class="table">
-    <thead>
-        <tr>
-            <th>
-                @Html.DisplayNameFor(model => model.ID)
-            </th>
-            <th>
-                Name
-            </th>
-            <th>
-                Price
-            </th>
-            <th>
-                Amount
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.TotalPrice)
-            </th>
-            <th></th>
-        </tr>
-    </thead>
-    <tbody>
-        @foreach (var item in Model)
-        {
+@if (Model.Count() == 0)
+{
+    <h1>Nothing to display here</h1>
+}
+else
+{
+    <table class="table">
+        <thead>
             <tr>
-                <td>
-                    @Html.DisplayFor(modelItem => item.ID)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.Product.Name)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.Product.Price)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.Amount)
-                </td>
-                <td id="totalPrice">
-                    @Html.DisplayFor(modelItem => item.TotalPrice)
-                </td>
-                <td>
-                    @Html.ActionLink("Edit", "Edit", new { /* id=item.PrimaryKey */ }) |
-                    @Html.ActionLink("Details", "Details", new { /* id=item.PrimaryKey */ }) |
-                    @Html.ActionLink("Delete", "Delete", new { /* id=item.PrimaryKey */ })
-                </td>
+                <th>
+                    @Html.DisplayNameFor(model => model.ID)
+                </th>
+                <th>
+                    Name
+                </th>
+                <th>
+                    Price
+                </th>
+                <th>
+                    Amount
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.TotalPrice)
+                </th>
+                <th></th>
             </tr>
-        }
-    </tbody>
-</table>
-@{ 
+        </thead>
+        <tbody>
+            @foreach (var item in Model)
+            {
+                <tr>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.ID)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Product.Name)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Product.Price)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Amount)
+                    </td>
+                    <td id="totalPrice">
+                        @Html.DisplayFor(modelItem => item.TotalPrice)
+                    </td>
+                    <td>
+                        @Html.ActionLink("Edit", "Edit", new { /* id=item.PrimaryKey */ }) |
+                        @Html.ActionLink("Details", "Details", new { /* id=item.PrimaryKey */ }) |
+                        @Html.ActionLink("Delete", "Delete", new { /* id=item.PrimaryKey */ })
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+
     decimal total = 0m;
+    int amount = 0;
     foreach (var item in Model)
     {
-        total += + item.TotalPrice;
+        amount += item.Amount;
+        total += +item.TotalPrice;
     }
+
+    <h3>@total  $</h3>
+    <a asp-controller="ShoppingCart" asp-action="BuyAsync" asp-route-amount="@amount">Buy all</a>
+    <a asp-controller="Product" asp-action="Index">Back to shop</a>
 }
-<h3>@total  $</h3>
-<a asp-controller="Product" asp-action="Index">Back to shop</a>
