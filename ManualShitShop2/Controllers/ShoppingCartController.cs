@@ -27,5 +27,10 @@ namespace ManualShitShop2.Controllers
             await _shoppingCartService.AddToCart(id, claim, amount);
             return RedirectToAction("Details", "Product", new { id });
         }
+        public async Task<IActionResult> RemoveFromCartAsync(int id)
+        {
+            await _shoppingCartService.RemoveFromCart(id);
+            return View("Index");
+        }
     }
 }

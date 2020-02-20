@@ -11,6 +11,6 @@ namespace ManualShitShop2.Services
     {
         Task<List<ShoppingCart>> GetItems();
         Task AddToCart(int id, ClaimsPrincipal claim, int amount);
-        Task RemoveFromCart(int id, ClaimsPrincipal claim);
+        Task RemoveFromCart(int id);
     }
 }

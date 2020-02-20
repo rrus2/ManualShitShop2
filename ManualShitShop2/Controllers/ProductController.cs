@@ -111,7 +111,7 @@ namespace ManualShitShop2.Controllers
                 return View();
             }
         }
-        public async Task<ActionResult> BuyAsync(int id, IFormCollection collection)
+        public async Task<IActionResult> BuyAsync(int id, IFormCollection collection)
         {
             var product = _productService.GetProduct(id);
             var claim = HttpContext.User;
@@ -119,7 +119,11 @@ namespace ManualShitShop2.Controllers
             await _orderService.BuyAsync(id, claim, amount);
             return View("ThankYou");
         }
-        public async Task<ActionResult> ThankYouAsync()
+        public async Task<IActionResult> ThankYouAsync()
+        {
+            return View();
+        }
+        public async Task<IActionResult> AboutAsync()
         {
             return View();
         }

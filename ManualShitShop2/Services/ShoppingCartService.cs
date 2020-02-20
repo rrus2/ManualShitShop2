@@ -38,7 +38,7 @@ namespace ManualShitShop2.Services
             return cart;
         }
 
-        public async Task RemoveFromCart(int id, ClaimsPrincipal claim)
+        public async Task RemoveFromCart(int id)
         {
             var cart = _db.ShoppingCart.FirstOrDefault(x => x.Product.ProductID == id);
             if (cart == null)
