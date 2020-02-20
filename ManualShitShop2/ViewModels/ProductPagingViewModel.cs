@@ -9,8 +9,8 @@ namespace ManualShitShop2.ViewModels
 {
     public class ProductPagingViewModel : PageModel
     {
-        public int CurrentPage { get; set; }
-        public int Count { get; set; }
+        public int CurrentPage { get; set; } = 1;
+        public int Count => Products.Count;
         public int PageSize { get; set; } = 5;
         public bool HasPreviousPage
         {
@@ -27,7 +27,7 @@ namespace ManualShitShop2.ViewModels
                 return (CurrentPage < TotalPages);
             }
         }
-        public int TotalPages => (int)Math.Ceiling(decimal.Divide(Count, PageSize));
+        public int TotalPages => (int)Math.Ceiling(Count / (double)PageSize);
         public List<Product> Products { get; set; }
     }
 }

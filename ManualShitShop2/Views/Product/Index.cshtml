@@ -32,21 +32,11 @@
 }
 <a asp-action="Index"
    asp-route-pageNumber="@(Model.CurrentPage - 1)"
-   class="btn btn-default">
+   class="btn btn-default @prevDisabled">
     Previous
 </a>
 <a asp-action="Index"
    asp-route-pageNumber="@(Model.CurrentPage + 1)"
-   class="btn btn-default">
+   class="btn btn-default @nextDisabled">
     Next
 </a>
-@*<div>
-        <ul class="pagination">
-            @for (var i = 1; i <= Model.TotalPages; i++)
-            {
-                <li class="page-item @(i == Model.CurrentPage ? "active" : "")">
-                    <a asp-page="/pagination" asp-route-currentpage="@i" class="page-link">@i</a>
-                </li>
-            }
-        </ul>
-    </div>*@
