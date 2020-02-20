@@ -43,5 +43,10 @@ namespace ManualShitShop2.Controllers
             await _shoppingCartService.ClearCart(claim);
             return RedirectToAction("Index", "Home");
         }
+        public async Task<IActionResult> DeleteAsync(int id)
+        {
+            await _shoppingCartService.RemoveFromCart(id);
+            return View("IndexAsync");
+        }
     }
 }

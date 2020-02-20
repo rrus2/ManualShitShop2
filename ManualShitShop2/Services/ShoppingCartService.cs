@@ -64,7 +64,7 @@ namespace ManualShitShop2.Services
 
         public async Task RemoveFromCart(int id)
         {
-            var cart = _db.ShoppingCart.FirstOrDefault(x => x.Product.ProductID == id);
+            var cart = _db.ShoppingCart.Include(x => x.Product).FirstOrDefault(x => x.Product.ProductID == id);
             if (cart == null)
             {
                 throw new Exception("Fail finding product");
