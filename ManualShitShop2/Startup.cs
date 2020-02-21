@@ -45,6 +45,7 @@ namespace ManualShitShop2
             services.AddIdentity<ApplicationUser, IdentityRole>()
             .AddEntityFrameworkStores<ApplicationDbContext>().AddDefaultTokenProviders().AddDefaultUI();
             services.AddPaging();
+            services.AddSession();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -65,6 +66,7 @@ namespace ManualShitShop2
             app.UseStaticFiles();
             app.UseCookiePolicy();
             app.UseAuthentication();
+            app.UseSession();
 
             app.UseMvc(routes =>
             {

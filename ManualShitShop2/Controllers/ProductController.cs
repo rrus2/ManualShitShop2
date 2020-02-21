@@ -21,9 +21,11 @@ namespace ManualShitShop2.Controllers
             this._orderService = orderService;
         }
         // GET: Product
-        public ActionResult Index(int? pageNumber = 1, int size = 5)
+        public ActionResult Index(string name, int price, int? pageNumber = 1, int size = 5)
         {
-            var products = _productService.GetProductsAsync((int)pageNumber, size);
+            if(name != null && name != string.Empty)
+                HttpContext.Session.SetString("name", name);
+            var products = _productService.GetProductsAsync(HttpContext.Session.GetString("name"), (int)pageNumber, size);
             var model = new ProductPagingViewModel { Products = products.GetAwaiter().GetResult(), CurrentPage = (int)pageNumber, PageSize = size, Count = _productService.GetCountAsync().GetAwaiter().GetResult() };
             return View(model);
         }
@@ -126,6 +128,12 @@ namespace ManualShitShop2.Controllers
         public async Task<IActionResult> AboutAsync()
         {
             return View();
+        }
+
+        public async Task<IActionResult> ResetAsync()
+        {
+            HttpContext.Session.Clear();
+            return Redirect("Index");
         }
     }
 }
