@@ -47,7 +47,7 @@
         @if (User.Identity.IsAuthenticated && Model.Stock > 0)
         {
             <input type="submit" class="btn btn-primary" value="Buy" asp-route-id="@Model.ProductID" asp-controller="Product" asp-action="BuyAsync" /> <br />
-            <input type="submit" class="btn btn-secondary" value="Add to cart" asp-controller="ShoppingCart" asp-action="AddToCartAsync" asp-route-id="@Model.ProductID"/><br />
+            <input type="submit" class="btn btn-secondary" value="Add to cart" asp-controller="ShoppingCart" asp-action="AddToCartAsync" asp-route-id="@Model.ProductID" onclick="AddToCart(@Model.Name)"/><br />
         }
         else
         {
@@ -64,5 +64,8 @@
         var amount = Number(select.options[select.selectedIndex].text);
         var total = amount * price;
         document.getElementById("TotalPrice").innerHTML = "Total: " + total + " $";
+    }
+    function AddToCart(name) {
+        alert(name);
     }
 </script>

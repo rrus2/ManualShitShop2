@@ -7,7 +7,7 @@
 
 <h1>Shopping cart of @User.Identity.Name</h1>
 
-@if (Model == null)
+@if (Model.Count() == 0)
 {
     <h1>Nothing to display here</h1>
 }
@@ -70,6 +70,6 @@ else
     }
 
     <h3>@total  $</h3>
-    <a asp-controller="ShoppingCart" asp-action="BuyAsync" asp-route-amount="@amount">Buy all</a>
+    <a asp-controller="ShoppingCart" asp-action="BuyAsync" asp-route-amount="@amount">Buy all</a><br />
     <a asp-controller="Product" asp-action="Index">Back to shop</a>
 }
