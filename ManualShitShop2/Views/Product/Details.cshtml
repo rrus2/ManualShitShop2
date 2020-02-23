@@ -30,6 +30,12 @@
                 @Html.DisplayFor(model => model.Price)
             </dd>
             <dt class="col-sm-2">
+                Image
+            </dt>
+            <dd class="col-sm-10">
+                <img src="~/@Model.ImagePath" alt="No image" height="250" width="250" />
+            </dd>
+            <dt class="col-sm-2">
                 @Html.DisplayNameFor(model => Model.Amount)
             </dt>
             <dd class="col-sm-10">
@@ -38,7 +44,7 @@
         </dl>
     </div>
     <div class="container text-center">
-        @if (User.Identity.IsAuthenticated && Model.Stock > 1)
+        @if (User.Identity.IsAuthenticated && Model.Stock > 0)
         {
             <input type="submit" class="btn btn-primary" value="Buy" asp-route-id="@Model.ProductID" asp-controller="Product" asp-action="BuyAsync" /> <br />
             <input type="submit" class="btn btn-secondary" value="Add to cart" asp-controller="ShoppingCart" asp-action="AddToCartAsync" asp-route-id="@Model.ProductID"/><br />

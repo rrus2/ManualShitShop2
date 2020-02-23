@@ -1,5 +1,4 @@
-﻿@*@model List<ManualShitShop2.Models.Product>*@
-@using ManualShitShop2.ViewModels
+﻿@using ManualShitShop2.ViewModels
 @model ProductPagingViewModel
 
 @{
@@ -41,6 +40,7 @@
     <div class="jumbotron text-center border-dark">
         @Html.DisplayFor(x => item.Name)<br />
         @Html.DisplayFor(x => item.Price)<br />
+        <img src="@item.ImagePath" alt="No image" height="50" width="50" /><br />
         @if (User.Identity.IsAuthenticated)
         {
             <a asp-controller="Product" asp-action="Details" asp-route-id="@item.ProductID" class="btn btn-primary">Details</a><br />

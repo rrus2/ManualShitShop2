@@ -1,10 +1,12 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
 using ManualShitShop2.Models;
 using ManualShitShop2.Services;
 using ManualShitShop2.ViewModels;
+using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
@@ -15,15 +17,17 @@ namespace ManualShitShop2.Controllers
     {
         private readonly IProductService _productService;
         private readonly IOrderService _orderService;
-        public ProductController(IProductService productService, IOrderService orderService)
+        private readonly IHostingEnvironment _env;
+        public ProductController(IProductService productService, IOrderService orderService, IHostingEnvironment env)
         {
             this._productService = productService;
             this._orderService = orderService;
+            _env = env;
         }
         // GET: Product
         public ActionResult Index(string name, int price, int? pageNumber = 1, int size = 5)
         {
-            if(name != null && name != string.Empty)
+            if (name != null && name != string.Empty)
                 HttpContext.Session.SetString("name", name);
             var products = _productService.GetProductsAsync(HttpContext.Session.GetString("name"), (int)pageNumber, size);
             var model = new ProductPagingViewModel { Products = products.GetAwaiter().GetResult(), CurrentPage = (int)pageNumber, PageSize = size, Count = _productService.GetCountAsync().GetAwaiter().GetResult() };
@@ -57,8 +61,24 @@ namespace ManualShitShop2.Controllers
         {
             try
             {
+                var files = HttpContext.Request.Form.Files;
+                string imagePath = string.Empty;
+                foreach (var image in files)
+                {
+                    if (image != null)
+                    {
+                        var file = image;
+                        var uploads = Path.Combine(_env.WebRootPath, "images");
+                        var fileName = Guid.NewGuid() + file.FileName;
+                        using (var stream = new FileStream(Path.Combine(uploads, fileName), FileMode.Create))
+                        {
+                            file.CopyToAsync(stream);
+                            imagePath = "images/" + fileName;
+                        }
+                    }
+                }
                 // TODO: Add insert logic here
-                var product = new Product { Name = collection["Name"], Price = Convert.ToDecimal(collection["Price"]), Stock = Convert.ToInt32(collection["Stock"]) };
+                var product = new Product { Name = collection["Name"], Price = Convert.ToDecimal(collection["Price"]), Stock = Convert.ToInt32(collection["Stock"]), ImagePath = imagePath };
                 _productService.CreateProduct(product);
                 return RedirectToAction(nameof(Index));
             }

@@ -16,6 +16,7 @@ namespace ManualShitShop2.Models
         [Required]
         public int Stock { get; set; }
         public int Amount { get; set; }
+        public string ImagePath { get; set; }
         public ICollection<Product> Products { get; set; }
     }
 }
