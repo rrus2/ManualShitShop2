@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 using ManualShitShop2.Models;
 using ManualShitShop2.Services;
 using ManualShitShop2.ViewModels;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
@@ -49,12 +50,14 @@ namespace ManualShitShop2.Controllers
         }
 
         // GET: Product/Create
+        [Authorize]
         public ActionResult Create()
         {
             return View();
         }
 
         // POST: Product/Create
+        [Authorize]
         [HttpPost]
         [ValidateAntiForgeryToken]
         public ActionResult Create(IFormCollection collection)
