@@ -11,9 +11,9 @@ namespace ManualShitShop2.Services
     {
         Task<List<Product>> GetProductsAsync(string name, int page, int size);
         Task<int> GetCountAsync();
-        Product GetProduct(int id);
-        Product CreateProduct(Product product);
-        Product UpdateProduct(int id, Product product);
-        Product DeleteProduct(int id);
+        Task<Product> GetProduct(int id);
+        Task<Product> CreateProduct(Product product);
+        Task<Product> UpdateProduct(int id, Product product);
+        Task<Product> DeleteProduct(int id);
     }
 }

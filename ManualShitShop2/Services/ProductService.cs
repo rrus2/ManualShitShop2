@@ -15,7 +15,7 @@ namespace ManualShitShop2.Services
         {
             this._db = db;
         }
-        public Product CreateProduct(Product product)
+        public async Task<Product> CreateProduct(Product product)
         {
             if (product == null)
             {
@@ -24,7 +24,7 @@ namespace ManualShitShop2.Services
             try
             {
                 _db.Products.Add(product);
-                _db.SaveChanges();
+                await _db.SaveChangesAsync();
             }
             catch (Exception)
             {
@@ -34,7 +34,7 @@ namespace ManualShitShop2.Services
 
         }
 
-        public Product DeleteProduct(int id)
+        public async Task<Product> DeleteProduct(int id)
         {
             if (id == 0)
             {
@@ -45,7 +45,7 @@ namespace ManualShitShop2.Services
             {
                 
                 _db.Products.Remove(item);
-                _db.SaveChanges();
+                await _db.SaveChangesAsync();
             }
             catch (Exception)
             {
@@ -60,9 +60,9 @@ namespace ManualShitShop2.Services
             return productCount;
         }
 
-        public Product GetProduct(int id)
+        public async Task<Product> GetProduct(int id)
         {
-            var product = _db.Products.FirstOrDefault(x => x.ProductID == id);
+            var product = await _db.Products.FindAsync(id);
             return product;
 
         }
@@ -77,17 +77,17 @@ namespace ManualShitShop2.Services
 
         }
 
-        public Product UpdateProduct(int id, Product product)
+        public async Task<Product> UpdateProduct(int id, Product product)
         {
             if (id == 0 || product == null)
             {
                 throw new Exception("Fail data for update product");
             }
-            var item = _db.Products.Find(id);
+            var item = await _db.Products.FindAsync(id);
             item.Name = product.Name;
             item.Price = product.Price;
             _db.Products.Update(item);
-            _db.SaveChanges();
+            await _db.SaveChangesAsync();
             return product;
         }
     }
