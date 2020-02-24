@@ -14,7 +14,9 @@ namespace ManualShitShop2.Models
         [Required]
         public decimal Price { get; set; }
         [Required]
+        [Range(1, int.MaxValue)]
         public int Stock { get; set; }
+        [Range(1, int.MaxValue)]
         public int Amount { get; set; }
         public string ImagePath { get; set; }
         public ICollection<Product> Products { get; set; }

@@ -15,7 +15,7 @@ namespace ManualShitShop2.Services
         {
             this._db = db;
         }
-        public void CreateProduct(Product product)
+        public Product CreateProduct(Product product)
         {
             if (product == null)
             {
@@ -30,20 +30,20 @@ namespace ManualShitShop2.Services
             {
                 throw new Exception("Fail creating product");
             }
-
+            return product;
 
         }
 
-        public void DeleteProduct(int id)
+        public Product DeleteProduct(int id)
         {
             if (id == 0)
             {
                 throw new Exception("Deleting id 0 is not possible");
             }
-
+            var item = _db.Products.Find(id);
             try
             {
-                var item = _db.Products.Find(id);
+                
                 _db.Products.Remove(item);
                 _db.SaveChanges();
             }
@@ -51,7 +51,7 @@ namespace ManualShitShop2.Services
             {
                 throw new Exception("Fail deleting product");
             }
-
+            return item;
         }
 
         public async Task<int> GetCountAsync()
@@ -77,7 +77,7 @@ namespace ManualShitShop2.Services
 
         }
 
-        public void UpdateProduct(int id, Product product)
+        public Product UpdateProduct(int id, Product product)
         {
             if (id == 0 || product == null)
             {
@@ -88,6 +88,7 @@ namespace ManualShitShop2.Services
             item.Price = product.Price;
             _db.Products.Update(item);
             _db.SaveChanges();
+            return product;
         }
     }
 }
