@@ -26,12 +26,12 @@ namespace ManualShitShop2.Controllers
             _env = env;
         }
         // GET: Product
-        public ActionResult Index(string name, int price, int? pageNumber = 1, int size = 5)
+        public async Task<ActionResult> Index(string name, int price, int? pageNumber = 1, int size = 5)
         {
             if (name != null && name != string.Empty)
                 HttpContext.Session.SetString("name", name);
-            var products = _productService.GetProductsAsync(HttpContext.Session.GetString("name"), (int)pageNumber, size);
-            var model = new ProductPagingViewModel { Products = products.GetAwaiter().GetResult(), CurrentPage = (int)pageNumber, PageSize = size, Count = _productService.GetCountAsync().GetAwaiter().GetResult() };
+            var products = await _productService.GetProductsAsync(HttpContext.Session.GetString("name"), (int)pageNumber, size);
+            var model = new ProductPagingViewModel { Products = products, CurrentPage = (int)pageNumber, PageSize = size, Count = _productService.GetCountAsync().GetAwaiter().GetResult() };
             return View(model);
         }
 
@@ -51,7 +51,7 @@ namespace ManualShitShop2.Controllers
 
         // GET: Product/Create
         [Authorize]
-        public ActionResult Create()
+        public async Task<ActionResult> Create()
         {
             return View();
         }
@@ -60,7 +60,7 @@ namespace ManualShitShop2.Controllers
         [Authorize]
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create(IFormCollection collection)
+        public async Task<ActionResult> Create(IFormCollection collection)
         {
             try
             {
@@ -75,14 +75,14 @@ namespace ManualShitShop2.Controllers
                         var fileName = Guid.NewGuid() + file.FileName;
                         using (var stream = new FileStream(Path.Combine(uploads, fileName), FileMode.Create))
                         {
-                            file.CopyToAsync(stream);
+                            await file.CopyToAsync(stream);
                             imagePath = "images/" + fileName;
                         }
                     }
                 }
                 // TODO: Add insert logic here
                 var product = new Product { Name = collection["Name"], Price = Convert.ToDecimal(collection["Price"]), Stock = Convert.ToInt32(collection["Stock"]), ImagePath = imagePath };
-                _productService.CreateProduct(product);
+                await _productService.CreateProduct(product);
                 return RedirectToAction(nameof(Index));
             }
             catch
