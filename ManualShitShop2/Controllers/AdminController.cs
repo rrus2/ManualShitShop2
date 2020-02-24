@@ -52,7 +52,8 @@ namespace ManualShitShop2.Controllers
         [HttpPost]
         public async Task<ActionResult> EditUserDetails(CreateUserViewModel model)
         {
-            return View();
+            await _adminService.EditUser(model.Id, model);
+            return View("ThankYouEditUser");
         }
         public IActionResult ThankYouEditUser()
         {
