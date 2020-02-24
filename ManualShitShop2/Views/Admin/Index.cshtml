@@ -1,0 +1,13 @@
+﻿
+@{
+    ViewData["Title"] = "Index";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h1>Admin page</h1>
+<div class="jumbotron text-center">
+    <a class="btn btn-primary" asp-controller="Admin" asp-action="CreateUser">Add user</a><br />
+    <a class="btn btn-primary" asp-controller="Admin" asp-action="EditUser">Edit user</a><br />
+    <a class="btn btn-danger" asp-controller="Admin" asp-action="DeleteUser">Delete user</a><br />
+    <a class="btn btn-primary" asp-controller="Admin" asp-action="CreateProduct">Add product</a>
+</div>

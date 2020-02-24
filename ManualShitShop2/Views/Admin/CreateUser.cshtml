@@ -1,0 +1,40 @@
+﻿@model ManualShitShop2.ViewModels.CreateUserViewModel;
+@{
+    ViewData["Title"] = "CreateUser";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h1>CreateUser</h1>
+
+<div class="jumbotron">
+    <form asp-controller="Admin" asp-action="CreateUser" method="post">
+        <div class="form-group">
+            <label asp-for="Email">Email</label>
+            <input asp-for="Email" class="form-control" placeholder="Enter email"/>
+            <span asp-validation-for="Email" style="color:red"></span>
+        </div>
+        <div class="form-group">
+            <label asp-for="Birthdate">Birthdate</label>
+            <input asp-for="Birthdate" class="form-control" type="date" />
+            <span asp-validation-for="Birthdate" style="color:red"></span>
+        </div>
+        <div class="form-group">
+            <label>Role</label>
+            <select asp-items="ViewBag.Roles" asp-for="Role" class="form-control"></select>
+            <span asp-validation-for="Role" style="color:red"></span>
+        </div>
+        <div class="form-group">
+            <label>Password</label>
+            <input asp-for="Password" class="form-control" placeholder="Enter password" />
+            <span asp-validation-for="Password" style="color:red"></span>
+        </div>
+        <div class="form-group">
+            <label>Repeat password</label>
+            <input asp-for="RepeatPassword" class="form-control" placeholder="Repeat password" />
+            <span asp-validation-for="RepeatPassword" style="color:red"></span>
+        </div>
+        <div class="form-group text-center">
+            <input type="submit" class="btn btn-primary box-shadow" value="Create user" />
+        </div>
+    </form>
+</div>
