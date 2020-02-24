@@ -8,6 +8,7 @@ namespace ManualShitShop2.ViewModels
 {
     public class CreateUserViewModel
     {
+        public string Id { get; set; }
         [DataType(DataType.EmailAddress)]
         [Required]
         public string Email { get; set; }

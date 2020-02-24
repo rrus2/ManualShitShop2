@@ -49,6 +49,15 @@ namespace ManualShitShop2.Controllers
             CreateRoles();
             return View(user);
         }
+        [HttpPost]
+        public async Task<ActionResult> EditUserDetails(CreateUserViewModel model)
+        {
+            return View();
+        }
+        public IActionResult ThankYouEditUser()
+        {
+            return View();
+        }
         public IActionResult ThankYouUser()
         {
             return View();

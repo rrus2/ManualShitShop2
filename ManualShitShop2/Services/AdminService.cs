@@ -36,11 +36,24 @@ namespace ManualShitShop2.Services
             await _userManager.AddToRoleAsync(user, model.Role);
         }
 
+        public async Task EditUser(string id, CreateUserViewModel model)
+        {
+            var user = await _userManager.FindByIdAsync(id);
+            user.UserName = model.Email;
+            user.Email = model.Email;
+            await _userManager.AddToRoleAsync(user, model.Role);
+            if (model.Password != null && model.Password != string.Empty)
+            {
+                await _userManager.RemovePasswordAsync(user);
+                await _userManager.AddPasswordAsync(user, model.Password);
+            }
+        }
+
         public async Task<CreateUserViewModel> GetUser(string id)
         {
             var user = await _db.Users.FindAsync(id);
             var role = await _userManager.GetRolesAsync(user);
-            var usertoreturn = new CreateUserViewModel { Birthdate = user.Birthdate, Email = user.Email, Role = role[0] };
+            var usertoreturn = new CreateUserViewModel { Birthdate = user.Birthdate, Email = user.Email, Role = role[0], Id = user.Id };
             return usertoreturn;
         }
 
