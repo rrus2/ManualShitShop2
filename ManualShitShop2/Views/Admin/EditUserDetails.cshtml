@@ -11,8 +11,9 @@
 <hr />
 <div class="row">
     <div class="col-md-4">
-        <form asp-action="EditUserDetails">
+        <form asp-action="EditUserDetailsPage" method="post" asp-controller="Admin">
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <input class="" type="hidden" value="@Model.Id" name="id" />
             <div class="form-group">
                 <label asp-for="Email" class="control-label"></label>
                 <input asp-for="Email" class="form-control" value="@Model.Email" />

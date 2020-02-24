@@ -7,7 +7,7 @@
 <h1>EditUser</h1>
 
 <div class="jumbotron">
-    <form asp-controller="Admin" asp-action="EditUserDetails">
+    <form asp-controller="Admin" asp-action="EditUserDetails" method="post">
         <div class="form-group">
             <select name="id" asp-items="ViewBag.Users" class="form-control"></select>
         </div>
