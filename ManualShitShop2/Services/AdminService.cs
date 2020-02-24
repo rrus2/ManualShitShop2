@@ -1,6 +1,8 @@
 ﻿using ManualShitShop2.Areas.Identity.Data;
+using ManualShitShop2.Models;
 using ManualShitShop2.ViewModels;
 using Microsoft.AspNetCore.Identity;
+using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -12,10 +14,12 @@ namespace ManualShitShop2.Services
     {
         private readonly UserManager<ApplicationUser> _userManager;
         private readonly RoleManager<IdentityRole> _roleManager;
-        public AdminService(UserManager<ApplicationUser> userManager, RoleManager<IdentityRole> roleManager)
+        private readonly ApplicationDbContext _db;
+        public AdminService(UserManager<ApplicationUser> userManager, RoleManager<IdentityRole> roleManager, ApplicationDbContext db)
         {
             _userManager = userManager;
             _roleManager = roleManager;
+            _db = db;
         }
         public async Task CreateUser(CreateUserViewModel model)
         {
@@ -30,6 +34,20 @@ namespace ManualShitShop2.Services
                 throw new Exception("Fail creating new user");
             }
             await _userManager.AddToRoleAsync(user, model.Role);
+        }
+
+        public async Task<CreateUserViewModel> GetUser(string id)
+        {
+            var user = await _db.Users.FindAsync(id);
+            var role = await _userManager.GetRolesAsync(user);
+            var usertoreturn = new CreateUserViewModel { Birthdate = user.Birthdate, Email = user.Email, Role = role[0] };
+            return usertoreturn;
+        }
+
+        public async Task<List<ApplicationUser>> GetUsers()
+        {
+            var users = await _db.Users.ToListAsync();
+            return users;
         }
     }
 }

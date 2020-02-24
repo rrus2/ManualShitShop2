@@ -1,0 +1,18 @@
+﻿
+@{
+    ViewData["Title"] = "EditUser";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h1>EditUser</h1>
+
+<div class="jumbotron">
+    <form asp-controller="Admin" asp-action="EditUserDetails">
+        <div class="form-group">
+            <select name="id" asp-items="ViewBag.Users" class="form-control"></select>
+        </div>
+        <div class="form-group text-center">
+            <input type="submit" value="Edit user" class="btn btn-primary" />
+        </div>
+    </form>
+</div>

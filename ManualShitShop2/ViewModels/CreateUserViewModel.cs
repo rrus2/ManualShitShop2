@@ -11,7 +11,6 @@ namespace ManualShitShop2.ViewModels
         [DataType(DataType.EmailAddress)]
         [Required]
         public string Email { get; set; }
-        [DataType(DataType.Date)]
         [Required]
         public DateTime Birthdate { get; set; }
         [Required]

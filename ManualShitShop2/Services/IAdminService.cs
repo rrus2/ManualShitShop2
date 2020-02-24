@@ -10,5 +10,7 @@ namespace ManualShitShop2.Services
     public interface IAdminService
     {
         Task CreateUser(CreateUserViewModel model);
+        Task<List<ApplicationUser>> GetUsers();
+        Task<CreateUserViewModel> GetUser(string id);
     }
 }

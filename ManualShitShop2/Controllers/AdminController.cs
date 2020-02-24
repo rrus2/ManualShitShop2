@@ -37,6 +37,18 @@ namespace ManualShitShop2.Controllers
             await _adminService.CreateUser(user);
             return View("ThankYouUser");
         }
+        public async Task<IActionResult> EditUser()
+        {
+            var users = await _adminService.GetUsers();
+            LoadUsers(users);
+            return View();
+        }
+        public async Task<ActionResult> EditUserDetails(string id)
+        {
+            var user = await _adminService.GetUser(id);
+            CreateRoles();
+            return View(user);
+        }
         public IActionResult ThankYouUser()
         {
             return View();
@@ -50,6 +62,11 @@ namespace ManualShitShop2.Controllers
             List<string> roles = new List<string> { "Admin", "User" };
             var select = new SelectList(roles);
             ViewBag.Roles = select;
+        }
+        public void LoadUsers(List<ApplicationUser> users)
+        {
+            var list = new SelectList(users, "Id", "Email");
+            ViewBag.Users = list;
         }
     }
 }
