@@ -36,9 +36,9 @@ namespace ManualShitShop2.Controllers
         }
 
         // GET: Product/Details/5
-        public ActionResult Details(int id)
+        public async Task<ActionResult> Details(int id)
         {
-            var product = _productService.GetProduct(id);
+            var product = await _productService.GetProduct(id);
             var listofstock = new List<int>();
             for (int i = 1; i < product.Stock + 1; i++)
             {
