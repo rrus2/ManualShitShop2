@@ -36,6 +36,12 @@ namespace ManualShitShop2.Services
             await _userManager.AddToRoleAsync(user, model.Role);
         }
 
+        public async Task DeleteUser(string id)
+        {
+            var user = await _userManager.FindByIdAsync(id);
+            await _userManager.DeleteAsync(user);
+        }
+
         public async Task EditUser(string id, CreateUserViewModel model)
         {
             var user = await _userManager.FindByIdAsync(id);

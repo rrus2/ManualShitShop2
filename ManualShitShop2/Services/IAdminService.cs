@@ -13,5 +13,6 @@ namespace ManualShitShop2.Services
         Task<List<ApplicationUser>> GetUsers();
         Task<CreateUserViewModel> GetUser(string id);
         Task EditUser(string id, CreateUserViewModel model);
+        Task DeleteUser(string id);
     }
 }

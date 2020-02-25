@@ -1,0 +1,17 @@
+﻿
+@{
+    ViewData["Title"] = "DeleteUser";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h1>Delete user</h1>
+
+<div class="jumbotron">
+    <form asp-action="DeleteUser" asp-controller="Admin" method="post">
+        <div class="form-group">
+            <select class="form-control" asp-items="ViewBag.Users" name="id"></select>
+        </div>
+        <input type="submit" class="btn btn-danger" value="Delete user" />
+    </form>
+    <a asp-controller="Admin" asp-action="Index">Back to admin page</a>
+</div>

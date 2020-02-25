@@ -43,14 +43,14 @@ namespace ManualShitShop2.Controllers
             LoadUsers(users);
             return View();
         }
-        public async Task<ActionResult> EditUserDetails(string id)
+        public async Task<IActionResult> EditUserDetails(string id)
         {
             var user = await _adminService.GetUser(id);
             CreateRoles();
             return View(user);
         }
         [HttpPost]
-        public async Task<ActionResult> EditUserDetailsPage(CreateUserViewModel model, string id)
+        public async Task<IActionResult> EditUserDetailsPage(CreateUserViewModel model, string id)
         {
             if (!ModelState.IsValid)
             {
@@ -58,6 +58,22 @@ namespace ManualShitShop2.Controllers
             }
             await _adminService.EditUser(id, model);
             return View("ThankYouEditUser");
+        }
+        public async Task<IActionResult> DeleteUser()
+        {
+            var users = await _adminService.GetUsers();
+            LoadUsers(users);
+            return View();
+        }
+        [HttpPost]
+        public async Task<IActionResult> DeleteUser(string id)
+        {
+
+            return View("ThankYouDeleteUser");
+        }
+        public IActionResult ThankYouDeleteUser()
+        {
+            return View();
         }
         public IActionResult ThankYouEditUser()
         {
