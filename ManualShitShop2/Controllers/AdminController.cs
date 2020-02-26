@@ -70,8 +70,12 @@ namespace ManualShitShop2.Controllers
         [HttpPost]
         public async Task<IActionResult> DeleteUser(string id)
         {
-
+            await _adminService.DeleteUser(id);
             return View("ThankYouDeleteUser");
+        }
+        public IActionResult UpdateProduct()
+        {
+            return View();
         }
         public IActionResult ThankYouDeleteUser()
         {
