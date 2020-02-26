@@ -27,6 +27,7 @@ namespace ManualShitShop2.Controllers
             return View();
         }
         [HttpPost]
+        [ValidateAntiForgeryToken]
         public async Task<IActionResult> CreateUser(CreateUserViewModel user)
         {
             if (!ModelState.IsValid)
@@ -50,6 +51,7 @@ namespace ManualShitShop2.Controllers
             return View(user);
         }
         [HttpPost]
+        [ValidateAntiForgeryToken]
         public async Task<IActionResult> EditUserDetailsPage(CreateUserViewModel model, string id)
         {
             if (!ModelState.IsValid)
