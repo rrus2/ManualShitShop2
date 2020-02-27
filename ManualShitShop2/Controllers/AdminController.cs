@@ -78,7 +78,7 @@ namespace ManualShitShop2.Controllers
         }
         public async Task<IActionResult> UpdateProduct()
         {
-            var products = await _productService.GetProductsAsync(null, 0, 0);
+            var products = await _productService.GetProductsAsync(null, null, null);
             LoadProducts(products);
             return View();
         }

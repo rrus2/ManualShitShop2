@@ -67,12 +67,15 @@ namespace ManualShitShop2.Services
 
         }
 
-        public async Task<List<Product>> GetProductsAsync(string name, int page, int size = 5)
+        public async Task<List<Product>> GetProductsAsync(string name, int? page, int? size = 5)
         {
             var products = _db.Products.AsEnumerable();
             if (name != null && name != string.Empty)
                 products = products.Where(x => x.Name.ToUpper().Contains(name.ToUpper()));
-            products = products.OrderBy(x => x.Name).Skip((page - 1) * size).Take(size);
+            if (page != null && size != null)
+            {
+                products = products.OrderBy(x => x.Name).Skip(((int)page - 1) * (int)size).Take((int)size);
+            }
             return products.ToList();
 
         }

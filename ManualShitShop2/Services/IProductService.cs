@@ -9,7 +9,7 @@ namespace ManualShitShop2.Services
 {
     public interface IProductService
     {
-        Task<List<Product>> GetProductsAsync(string name, int page, int size);
+        Task<List<Product>> GetProductsAsync(string name, int? page, int? size);
         Task<int> GetCountAsync();
         Task<Product> GetProduct(int id);
         Task<Product> CreateProduct(Product product);
