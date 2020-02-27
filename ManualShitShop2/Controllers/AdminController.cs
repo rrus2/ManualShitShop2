@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using ManualShitShop2.Areas.Identity.Data;
+using ManualShitShop2.Models;
 using ManualShitShop2.Services;
 using ManualShitShop2.ViewModels;
 using Microsoft.AspNetCore.Mvc;
@@ -13,9 +14,11 @@ namespace ManualShitShop2.Controllers
     public class AdminController : Controller
     {
         private readonly IAdminService _adminService;
-        public AdminController(IAdminService adminService)
+        private readonly IProductService _productService;
+        public AdminController(IAdminService adminService, IProductService productService)
         {
             _adminService = adminService;
+            _productService = productService;
         }
         public async Task<IActionResult> Index()
         {
@@ -73,8 +76,10 @@ namespace ManualShitShop2.Controllers
             await _adminService.DeleteUser(id);
             return View("ThankYouDeleteUser");
         }
-        public IActionResult UpdateProduct()
+        public async Task<IActionResult> UpdateProduct()
         {
+            var products = await _productService.GetProductsAsync(null, 0, 0);
+            LoadProducts(products);
             return View();
         }
         public IActionResult ThankYouDeleteUser()
@@ -93,16 +98,21 @@ namespace ManualShitShop2.Controllers
         {
             return View();
         }
-        public void CreateRoles()
+        private void CreateRoles()
         {
             List<string> roles = new List<string> { "Admin", "User" };
             var select = new SelectList(roles);
             ViewBag.Roles = select;
         }
-        public void LoadUsers(List<ApplicationUser> users)
+        private void LoadUsers(List<ApplicationUser> users)
         {
             var list = new SelectList(users, "Id", "Email");
             ViewBag.Users = list;
+        }
+        private void LoadProducts(List<Product> products)
+        {
+            var list = new SelectList(products, "ProductID", "Name");
+            ViewBag.Products = list;
         }
     }
 }

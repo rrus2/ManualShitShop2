@@ -1,0 +1,16 @@
+﻿
+@{
+    ViewData["Title"] = "UpdateProduct";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h1>Update products</h1>
+
+<div class="jumbotron">
+    <form>
+        <div class="form-group">
+            <select asp-items="@ViewBag.Products" class="form-control"></select>
+        </div>
+        <input type="submit" asp-action="UpdateProductDetails" value="Select product" />
+    </form>
+</div>
