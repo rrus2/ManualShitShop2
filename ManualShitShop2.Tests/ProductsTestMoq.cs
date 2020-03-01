@@ -21,6 +21,7 @@ namespace ManualShitShop2.Tests
 
         [Theory]
         [InlineData("AK-47", 2000, 20)]
+        [InlineData("AK", double.MaxValue, int.MaxValue)]
         public void CreateProductSuccess(string name, decimal price, int stock)
         {
             //act

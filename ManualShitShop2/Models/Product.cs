@@ -12,6 +12,7 @@ namespace ManualShitShop2.Models
         [Required]
         public string Name { get; set; }
         [Required]
+        [Range(1, double.MaxValue)]
         public decimal Price { get; set; }
         [Required]
         [Range(1, int.MaxValue)]

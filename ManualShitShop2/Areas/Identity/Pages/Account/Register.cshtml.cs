@@ -79,8 +79,8 @@ namespace ManualShitShop2.Areas.Identity.Pages.Account
                 var result = await _userManager.CreateAsync(user, Input.Password);
                 if (result.Succeeded)
                 {
-                    await _roleManager.CreateAsync(new IdentityRole { Name = "User" });
-                    await _userManager.AddToRoleAsync(user, "User");
+                    await _roleManager.CreateAsync(new IdentityRole { Name = "Admin" });
+                    await _userManager.AddToRoleAsync(user, "Admin");
                     _logger.LogInformation("User created a new account with password.");
 
                     var code = await _userManager.GenerateEmailConfirmationTokenAsync(user);
